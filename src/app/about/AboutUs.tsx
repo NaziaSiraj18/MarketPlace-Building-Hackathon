@@ -61,7 +61,8 @@ export default function AboutUs() {
               <button className="ml-4 inline-flex text-black border-0 py-2 px-3 focus:outline-none rounded text-lg">
                 <IoPlayOutline className="mr-2 block" />
                 Watch video
-                <img src="/Play.png"
+                <Image
+                src="/Play.png"
                  alt="play logo" />
               </button>
             </div>

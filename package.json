@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.11.0",
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "@mui/icons-material": "^6.4.2",
     "@radix-ui/react-select": "^2.1.5",
     "@radix-ui/react-slot": "^1.1.1",
     "@sanity/client": "^6.27.2",
@@ -19,8 +21,9 @@
     "class-variance-authority": "^0.7.1",
     "import-data": "^1.0.0",
     "lucide-react": "^0.474.0",
-    "next": "15.1.6",
+    "next": "^15.1.6",
     "next-sanity": "^9.8.46",
+    "package-name": "^0.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
@@ -29,7 +32,8 @@
     "sanity": "^3.72.1",
     "styled-components": "^6.1.14",
     "sweetalert2": "^11.15.10",
-    "tailwind-merge": "^2.6.0"
+    "tailwind-merge": "^2.6.0",
+    "tailwind-variants": "^0.3.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -41,6 +45,7 @@
     "eslint-config-next": "15.1.6",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "webpack": "^5.97.1"
   }
 }

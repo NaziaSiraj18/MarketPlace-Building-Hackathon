@@ -196,8 +196,8 @@ export default ShopProducts;
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import {Select} from '@/components/ui/select'
 import { Input } from '@/components/ui/input';
+
 
 function ShopProducts() {
   // Product data (for now, we're using static images)
