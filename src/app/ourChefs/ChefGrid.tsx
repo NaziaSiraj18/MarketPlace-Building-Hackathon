@@ -9,7 +9,7 @@ const chefs = [
   { name: "Tahmina Rumi", role: "Cook", image: "../../../public/ourchef5.png" },
   { name: "Bisnu Devgon", role: "Chef", image: "/../../../public/ourchef6.png" },
   { name: "Motin Molladst", role: "Chef", image: "../../../public/ourchef7.png" },
-  { name: "William Rumi", role: "Chef", image: "../../../public/ourchef8.jpeg" },
+  { name: "William Rumi", role: "Chef", image: "../../../public/ourchef8.png" },
   { name: "Kets William Roy", role: "Chef", image: "../../../public/ourchef9.png" },
   { name: "Mahmud Kholil", role: "Chef", image: "/../../../public/ourchef10.png" },
   { name: "Ataur Rahman", role: "Chef", image: "/../../../public/ourchef11.png" },

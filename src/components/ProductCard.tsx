@@ -27,7 +27,7 @@ interface Product {
 
 // Image URL Builder for Sanity
 const builder = imageUrlBuilder(client);
-function urlFor(source: any) {
+function urlFor(source: string | { asset: { _ref: string } }) {
   if (typeof source === "string") {
     return source;
   }

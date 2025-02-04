@@ -195,13 +195,14 @@ export default ShopProducts;
 "use client";
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Select } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import {Select} from '@/components/ui/select'
 import { Input } from '@/components/ui/input';
 
 function ShopProducts() {
   // Product data (for now, we're using static images)
   const images = Array.from({ length: 15 }, (_, i) => ({
+    id: i + 1,
     src: `/shop-detail/ShopProducts${i + 1}.png`,
     title: `Product ${i + 1}`,
     price: 38.00,
@@ -211,7 +212,7 @@ function ShopProducts() {
   }));
 
   // State hooks for managing products, cart, search term, and pagination
-  const [products, setProducts] = useState(images);
+  const [products] = useState(images);
   interface Product {
     id: number;
     src: string;
@@ -224,10 +225,10 @@ function ShopProducts() {
 
   const [cart, setCart] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState([0, 8000]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [itemsPerPage] = useState(12);
 
   const categories = [
     { id: 'sandwiches', label: 'Sandwiches' },
@@ -237,17 +238,17 @@ function ShopProducts() {
   ];
 
   // Handle adding to cart
-  const addToCart = (product) => {
+  const addToCart = (product: Product) => {
     setCart([...cart, product]);
   };
 
   // Handle search filtering
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
   // Handle category filtering
-  const handleCategoryChange = (categoryId) => {
+  const handleCategoryChange = (categoryId: string) => {
     setSelectedCategories((prev) =>
       prev.includes(categoryId)
         ? prev.filter((cat) => cat !== categoryId)
@@ -273,7 +274,7 @@ function ShopProducts() {
     currentPage * itemsPerPage
   );
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 

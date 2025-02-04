@@ -1,3 +1,4 @@
+
 import Error from "@/components/Error/Error";
 import ErrorHero from "@/components/MainHero/ErrorHero";
 import Navbar from "@/components/Navbar/Navbar";
