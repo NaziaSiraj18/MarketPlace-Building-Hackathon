@@ -1,33 +1,40 @@
-"use client"
-import OurChefs from "@/components/Ourchefgrid";
-import React from "react";
+/*import React from 'react'
 
-
-
- function Page() { 
+function page() {
   return (
-    <div>
-      <OurChefs/>
+    <div className='md:max-w-[1920px]'>
+        <Common  title='Our Chef' subtitle='Chef'/>
       
     </div>
-  );
+  )
 }
 
-export default Page;
+export default page
+*/
+/*
+import React from 'react';
+import TitleSubtitle  from '@/components/TitleSubtitle'
 
-/*"use client";
-import React from "react";
-import Common from '../components/common'
-
-function Page() { 
+const Page = () => {
   return (
-    <div>
-      <MeetChef/>
+    <div className='md:max-w-[1920px]'>
+      <TitleSubtitle title='Our Chef' subtitle='Chef'/>
     </div>
   );
-}
+};
 
 export default Page;
 */
+import React from 'react';
+import TitleSubtitle from '@/components/TitleSubtitle';
 
+const Page = () => {
+  return (
+    <div className="md:max-w-[1920px]">
+      <TitleSubtitle title="Our Chef" subtitle="Chef" />
+    </div>
+  );
+};
+
+export default Page;
 

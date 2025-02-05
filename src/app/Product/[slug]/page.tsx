@@ -1,30 +1,35 @@
-
 import { groq } from "next-sanity";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { Star } from "lucide-react";
-import { Product } from "../../../../scripts/types/type";
+import { Product, Review } from "../../../../scripts/types/type";
 
 interface ProductPageProps {
   params: { slug: string };
 }
 
 async function getProduct(slug: string): Promise<Product | null> {
-  return client.fetch(
-    groq`*[_type == "food" && slug.current == $slug][0]{
-      _id,
-      name,
-      type,
-      image,
-      price,
-      discountPrice,
-      description,
-      reviews,
-      tags
-    }`,
-    { slug }
-  );
+  try {
+    const product = await client.fetch(
+      groq`*[_type == "food" && slug.current == $slug][0]{
+        _id,
+        name,
+        type,
+        image,
+        price,
+        discountPrice,
+        description,
+        reviews,
+        tags
+      }`,
+      { slug }
+    );
+    return product || null;
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    return null;
+  }
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
@@ -35,7 +40,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   const discountPercentage = product.discountPrice
-    ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
+    ? Math.round(((Number(product.price) - Number(product.discountPrice)) / Number(product.price)) * 100)
     : 0;
 
   return (
@@ -47,7 +52,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           {product.image && (
             <Image
               src={urlFor(product.image).url()}
-              alt={product.name}
+              alt={product.name || "Product image"}
               width={500}
               height={500}
               className="object-cover w-full h-full"
@@ -80,13 +85,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div>
               <h3 className="text-xl font-semibold text-gray-800">Customer Reviews</h3>
               <div className="mt-3 space-y-3">
-                {product.reviews.map((review: string, index: number) => (
+                {product.reviews.map((review: Review, index: number) => (
                   <div
                     key={index}
                     className="flex items-center gap-3 bg-gray-100 p-3 rounded-lg shadow-md"
                   >
                     <Star className="text-yellow-500" />
-                    <p className="text-gray-700">{review}</p>
+                    <p className="text-gray-700">{review.comment}</p>
                   </div>
                 ))}
               </div>
@@ -121,3 +126,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
     </div>
   );
 }
+
+
+

@@ -34,7 +34,7 @@ const BlogCard: FC<BlogCardProps> = ({
         />
       </div>
 
-      {/* Text Content */}
+     {/* Text Content */}
       <div className='p-6'>
         {/* Date and Admin Info */}
         <div className='flex flex-wrap gap-4 items-center text-[14px] md:text-[16px] font-normal text-gray-600'>
@@ -60,7 +60,7 @@ const BlogCard: FC<BlogCardProps> = ({
         </div>
 
         {/* Title */}
-        <h2 className='mt-4 text-xl md:text-2xl font-bold text-gray-900 hover:text-[#FF9F0D] transition-colors duration-300'>
+       <h2 className='mt-4 text-xl md:text-2xl font-bold text-gray-900 hover:text-[#FF9F0D] transition-colors duration-300'>
           {title}
         </h2>
 

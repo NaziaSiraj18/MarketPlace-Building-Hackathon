@@ -275,7 +275,7 @@ export default function CheckoutPage() {
   );
 }
   */
- "use client";
+/* "use client";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -381,8 +381,8 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Breadcrumb */}
-      <div className="mt-6">
+      {/* Breadcrumb */
+  /*    <div className="mt-6">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center gap-2 py-4">
             <Link
@@ -397,11 +397,11 @@ export default function CheckoutPage() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* Main Content */
+   /*   <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Order Summary */}
-          <div className="bg-white border rounded-lg p-6 space-y-4">
+          {/* Order Summary */
+       /*   <div className="bg-white border rounded-lg p-6 space-y-4">
             <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
             {cartItems.length > 0 ? (
               cartItems.map((item) => (
@@ -447,8 +447,8 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* Billing Form */}
-          <div className="bg-white border rounded-lg p-6 space-y-6">
+          {/* Billing Form */
+       /*   <div className="bg-white border rounded-lg p-6 space-y-6">
             <h2 className="text-xl font-semibold">Billing Information</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
@@ -554,6 +554,154 @@ export default function CheckoutPage() {
               Place Order
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+*/
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { CgChevronRight } from "react-icons/cg";
+import { getCartItems } from "@/app/actions/action";
+import { urlFor } from "@/sanity/lib/image";
+import { client } from "@/sanity/lib/client";
+import { Product } from "../../../scripts/types/type";
+
+export default function CheckoutPage() {
+  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [discount, setDiscount] = useState<number>(0);
+  const [formValues, setFormValues] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    zipCode: "",
+    phone: "",
+    email: "",
+  });
+
+  const [formErrors, setFormErrors] = useState({
+    firstName: false,
+    lastName: false,
+    address: false,
+    city: false,
+    zipCode: false,
+    phone: false,
+    email: false,
+  });
+
+  useEffect(() => {
+    const items = getCartItems();
+    setCartItems(items);
+    const appliedDiscount = localStorage.getItem("appliedDiscount");
+    if (appliedDiscount) setDiscount(Number(appliedDiscount));
+  }, []);
+
+  const subtotal = cartItems.reduce((total, item) => total + item.price * (item.inventry || 1), 0);
+  const total = Math.max(subtotal - discount, 0);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues({ ...formValues, [e.target.id]: e.target.value });
+  };
+
+  const validateForm = () => {
+    const errors = Object.keys(formValues).reduce((acc, key) => {
+      acc[key as keyof typeof formErrors] = !formValues[key as keyof typeof formValues];
+      return acc;
+    }, {} as typeof formErrors);
+
+    setFormErrors(errors);
+    return Object.values(errors).every((error) => !error);
+  };
+
+  const handlePlaceOrder = async () => {
+    if (!validateForm()) return;
+
+    const orderData = {
+      _type: "order",
+      ...formValues,
+      CartItems: cartItems.map((item) => ({ _type: "reference", _ref: item._id })),
+      total,
+      discount,
+      orderDate: new Date().toISOString(),
+    };
+
+    try {
+      await client.create(orderData);
+      localStorage.removeItem("appliedDiscount");
+      console.log("Order created successfully.");
+    } catch (error) {
+      console.error("Error creating order", error);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8">
+      <nav className="flex items-center gap-2 py-4 text-sm">
+        <Link href="/cart" className="text-gray-600 hover:text-black">Cart</Link>
+        <CgChevronRight className="w-4 h-4 text-gray-600" />
+        <span>Checkout</span>
+      </nav>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto py-12">
+        <div className="bg-white border rounded-lg p-6 space-y-4">
+          <h2 className="text-lg font-semibold">Order Summary</h2>
+          {cartItems.length ? cartItems.map((item) => (
+            <div key={item._id} className="flex items-center gap-4 py-3 border-b">
+              <div className="w-16 h-16 rounded overflow-hidden">
+                {item.image && (
+                  <Image
+                    src={urlFor(item.image)?.url() || "/fallback.jpg"}
+                    alt={item.productName}
+                    width={64}
+                    height={64}
+                    className="object-cover w-full h-full"
+                  />
+                )}
+              </div>
+              <div className="flex-1">
+                <h3 className="text-sm font-medium">{item.productName}</h3>
+                <p className="text-xs text-gray-500">Quantity: {item.inventry || 1}</p>
+              </div>
+              <p className="text-sm font-medium">${item.price * (item.inventry || 1)}</p>
+            </div>
+          )) : <p className="text-sm text-gray-500">Your cart is empty.</p>}
+          <div className="text-right pt-4">
+            <p className="text-sm">Subtotal: <span className="font-medium">${subtotal}</span></p>
+            <p className="text-sm">Discount: <span className="font-medium">-${discount}</span></p>
+            <p className="text-lg font-semibold">Total: ${total.toFixed(2)}</p>
+          </div>
+        </div>
+
+        <div className="bg-white border rounded-lg p-6 space-y-6">
+          <h2 className="text-xl font-semibold">Billing Information</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {Object.keys(formValues).map((key) => (
+              <div key={key}>
+                <label htmlFor={key} className="block text-sm font-medium capitalize">{key.replace(/([A-Z])/g, " $1").trim()}</label>
+                <input
+                  id={key}
+                  placeholder={`Enter your ${key}`}
+                  value={formValues[key as keyof typeof formValues]}
+                  onChange={handleInputChange}
+                  className="border w-full p-2 rounded-lg"
+                />
+                {formErrors[key as keyof typeof formErrors] && (
+                  <p className="text-sm text-red-500">{key} is required.</p>
+                )}
+              </div>
+            ))}
+          </div>
+          <button
+            className="w-full h-12 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-lg"
+            onClick={handlePlaceOrder}
+          >
+            Place Order
+          </button>
         </div>
       </div>
     </div>

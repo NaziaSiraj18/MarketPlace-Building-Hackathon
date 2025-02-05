@@ -9,7 +9,10 @@ import FoodSection from "@/components/FoodSection";
 import Testimonial from "@/components/Testimonal";
 import BannerCard from "@/components/BannerCard";
 import ProductCard from "@/components/ProductCard";
-import Ourchefgrid from "@/components/Ourchefgrid";
+import MeetChef from "@/components/MeetChef";
+
+
+
 
 
 
@@ -23,7 +26,7 @@ export default function Home() {
       <FoodCategory />
       <HeroMenu />
       <ProductCard/>
-      <Ourchefgrid/>
+      <MeetChef/>
       <Experience />
       <Testimonial />
       <FoodSection />
