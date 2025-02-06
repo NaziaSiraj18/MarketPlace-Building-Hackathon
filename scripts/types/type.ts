@@ -1,26 +1,4 @@
-/*export  interface Product {
-  tags: never[];
-  reviews: any;
-  name: ReactI18NextChildren | Iterable<ReactI18NextChildren>;
-  discountPrice: boolean;
-  _id : string;
-   FoodName : string;
-   _type: "product";
-   image?:  {
-      asset: {
-      _ref : string;
-      _type : "image";
-   }
-  };
-  
-      price : number; 
-      description? : string;
-      slug : {
-          _type: "slug"
-          current: string;
-      };
-  }
-*/
+
 export interface Product {
     productName: string;
     inventry: number;

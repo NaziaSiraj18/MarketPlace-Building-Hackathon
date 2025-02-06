@@ -4,12 +4,14 @@ import AboutUs from './AboutUs'
 
 
 
+
 const About = () => {
   return (
     <div>
       
       <Hero />
       <AboutUs/>
+    
       </div>
   )   
   }

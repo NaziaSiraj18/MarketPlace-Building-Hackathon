@@ -11,6 +11,7 @@ import {
   SignedOut,
   UserButton
 } from '@clerk/nextjs'
+import Navbar from "@/components/Navbar/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,6 +55,7 @@ export default function RootLayout({
     <SignedIn>
       <UserButton />
     </SignedIn>
+    <Navbar/>
     {children}
     <Footer/>
   </body>

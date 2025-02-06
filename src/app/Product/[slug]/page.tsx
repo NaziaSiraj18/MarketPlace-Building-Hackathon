@@ -52,7 +52,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           {product.image && (
             <Image
               src={urlFor(product.image).url()}
-              alt={product.name || "Product image"}
+              alt={product?.name || "Product image"}
               width={500}
               height={500}
               className="object-cover w-full h-full"
@@ -126,6 +126,4 @@ export default async function ProductPage({ params }: ProductPageProps) {
     </div>
   );
 }
-
-
 
